@@ -11,12 +11,10 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-
-#include "system.hpp" // sys::*
-
-
 using namespace std::literals; // "..."sv
 
+import utilities.system; // sys::*
+import utilities.time_meas; // tms::measure
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -71,11 +69,28 @@ int main( int argc, const char* argv[] )
     try{
         Arguments args(argc, argv);
 
+        tms::measure t;
+        //sys::perf_counter perf_cnt(1.0); // Measures time in [s]
+
         sys::process prc( args.exe() );
         prc.run( args.exeargs() );
+
+        t.start();
+        //const double t_start_s = perf_cnt.now();
+        
         const int ret = prc.wait();
 
-        std::cout << prc.get_time() << '\n';
+        const double actual_time_seconds = t.elapsed_seconds();
+        //const double actual_perf_time_seconds = perf_cnt.now() - t_start_s;
+        auto prc_stats = prc.get_execution_stats();
+
+        //std::cout.imbue(std::locale("")); // #include <locale>
+        std::cout << std::fixed; std::cout.precision(6);
+        std::cout << "actual: " << actual_time_seconds << " s\n"
+                     //"actual perf: " << actual_perf_time_seconds << " s\n"
+                     "system: " << (prc_stats.kernel_time_seconds + prc_stats.user_time_seconds) << " s"
+                                   " (kernel:" << prc_stats.kernel_time_seconds << " + user:" << prc_stats.user_time_seconds << ")\n"
+                     "cpu-cycles: " << prc_stats.CPU_clock_cycles << '\n';
 
         return ret;
        }

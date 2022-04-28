@@ -1,22 +1,26 @@
 @echo off
 
-set cmd=notepad.exe
+set sec=1
+rem set prg=cmd /c "timeout /t %sec% /nobreak > NUL"
+set prg=powershell -nop -c "& {sleep %sec%}"
 
-echo launching %cmd%
-echo waiting process end...
+rem A first launch to avoid possible optimizations differences
+%prg%
 
-rem cmd /v:on /c "echo !TIME! & *mycommand* & echo !TIME!"
-r
-rem timeout /t 30 /nobreak > NUL
-rem powershell -nop -c "& {sleep seconds}"
-rem PS> Measure-Command { echo hi }
-rem PS> (Measure-Command { echo hi | Out-Default }).ToString()
-rem powershell -Command "Measure-Command {echo hi | Out-Default}"
-echo time=%time%
+echo Launching: %prg%
 
-..\msvc\x64-Debug\prctime.exe %cmd%
+echo ----(time=%time%)
+echo.
 
-echo time=%time%
-echo ret=%errorlevel%
+rem ..\msvc\x64-Debug\prctime.exe %prg%
+..\msvc\x64-Release\prctime.exe %prg%
+
+echo.
+echo ----(time=%time%)
+echo ----(ret=%errorlevel%)
+
+echo.
+echo PS ^> Measure-Command
+powershell -nop -c "(Measure-Command {sleep %sec% | Out-Default}).ToString()"
 
 pause

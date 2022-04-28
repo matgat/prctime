@@ -96,9 +96,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\source\prctime.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\source\system.hpp" />
+    <ClCompile Include="..\source\utilities.system.ixx" />
+    <ClCompile Include="..\source\utilities.time_meas.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
