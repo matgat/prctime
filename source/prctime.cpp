@@ -82,7 +82,7 @@ int main( int argc, const char* argv[] )
 
         const double actual_time_seconds = t.elapsed_seconds();
         //const double actual_perf_time_seconds = perf_cnt.now() - t_start_s;
-        auto prc_stats = prc.get_execution_stats();
+        const auto prc_stats = prc.get_execution_stats();
 
         //std::cout.imbue(std::locale("")); // #include <locale>
         std::cout << std::fixed; std::cout.precision(6);
