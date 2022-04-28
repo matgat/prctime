@@ -12,7 +12,7 @@ Basic usage:
 
 Example:
 ```
-> prctime notepad.exe
+> prctime timeout /t 1 /nobreak
 ```
 
 
