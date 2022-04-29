@@ -73,7 +73,7 @@ int main( int argc, const char* argv[] )
         //sys::perf_counter perf_cnt(1.0); // Measures time in [s]
 
         sys::process prc( args.exe() );
-        prc.run( args.exeargs() );
+        prc.launch( args.exeargs() );
 
         t.start();
         //const double t_start_s = perf_cnt.now();

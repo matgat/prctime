@@ -72,11 +72,11 @@ export class process final
 
 
     //-------------------------------------------------------------------
-    void run(const std::string& args)
+    void launch(const std::string& args)
        {
         if(i_Created)
            {
-            throw std::runtime_error("sys::process::run: Already running");
+            throw std::runtime_error("sys::process::launch: Already running");
            }
 
         i_StartupInfo = {0};
@@ -103,7 +103,7 @@ export class process final
                                     &i_ProcessInfo);       // LPPROCESS_INFORMATION lpProcessInformation
         if( !i_Created )
            {
-            throw std::runtime_error( std::format("sys::process::run: {}", sys::get_lasterr_msg()) );
+            throw std::runtime_error( std::format("sys::process::launch: {}", sys::get_lasterr_msg()) );
            }
        }
 
@@ -181,7 +181,7 @@ export class process final
        };
     exec_stats_t get_execution_stats() const
        {
-        if(!i_Created) throw std::runtime_error("get_time: process not created!");
+        if(!i_Created) throw std::runtime_error("sys::process::get_execution_stats: Process not created!");
         exec_stats_t stats{};
 
         // FILETIME: A 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (UTC)
