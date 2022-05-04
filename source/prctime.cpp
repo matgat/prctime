@@ -11,7 +11,6 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-using namespace std::literals; // "..."sv
 
 import utilities.system; // sys::*
 import utilities.time_meas; // tms::measure
@@ -21,14 +20,14 @@ import utilities.time_meas; // tms::measure
 class Arguments final
 {
  public:
-    Arguments(int argc, const char* argv[])
+    Arguments(const int argc, const char* const argv[])
        {
         // The first argument is the executable
         if(argc < 2) throw std::invalid_argument("Executable not provided");
         i_exe = std::string{ argv[1] };
 
         // The remaining are the executable arguments
-        i_exeargs.reserve( 20 * argc );
+        i_exeargs.reserve( 20u * argc );
         for( int i=2; i<argc; ++i )
            {
             i_exeargs += " ";
@@ -36,13 +35,13 @@ class Arguments final
            }
        }
 
-    static void print_help() noexcept
-       {
-        std::cout << "\nMeasures the time taken by a process:\n"
-                     "   .Uses GetProcessTimes() api\n"
-                     "   .Prints result to stdout\n"
-                     "\n";
-       }
+    //static void print_help() noexcept
+    //   {
+    //    std::cout << "\nMeasures the time taken by a process:\n"
+    //                 "   .Uses GetProcessTimes() api\n"
+    //                 "   .Prints result to stdout\n"
+    //                 "\n";
+    //   }
 
     static void print_usage() noexcept
        {
@@ -51,9 +50,9 @@ class Arguments final
                      "\n";
        }
 
-    const auto& exe() const noexcept { return i_exe; }
-    const auto& exeargs() const noexcept { return i_exeargs; }
-    //bool verbose() const noexcept { return i_verbose; }
+    [[nodiscard]] const auto& exe() const noexcept { return i_exe; }
+    [[nodiscard]] const auto& exeargs() const noexcept { return i_exeargs; }
+    //[[nodiscard]] bool verbose() const noexcept { return i_verbose; }
 
  private:
     std::string i_exe;
@@ -64,7 +63,7 @@ class Arguments final
 
 
 //---------------------------------------------------------------------------
-int main( int argc, const char* argv[] )
+int main( const int argc, const char* const argv[] )
 {
     try{
         Arguments args(argc, argv);
@@ -77,7 +76,7 @@ int main( int argc, const char* argv[] )
 
         t.start();
         //const double t_start_s = perf_cnt.now();
-        
+
         const int ret = prc.wait();
 
         const double actual_time_seconds = t.elapsed_seconds();
