@@ -17,6 +17,7 @@ Makefile.Debug
 Makefile.Release
 
 # [msvc]
+.vs/
 *.exe.recipe
 *.iobj
 *.tlog
