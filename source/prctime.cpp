@@ -30,7 +30,7 @@ class Arguments final
         i_exeargs.reserve( 20u * argc );
         for( int i=2; i<argc; ++i )
            {
-            i_exeargs += " ";
+            i_exeargs += ' ';
             i_exeargs += argv[i];
            }
        }
@@ -46,7 +46,7 @@ class Arguments final
     static void print_usage() noexcept
        {
         std::cerr << "\nUsage:\n"
-                     "   prctime prg.exe prg-arg1 prg-arg2\n"
+                     "   prctime prg.exe [prg-arg1 prg-arg2 ...]\n"
                      "\n";
        }
 
