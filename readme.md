@@ -21,6 +21,6 @@ _________________________________________________________________________
 ```
 > git clone https://github.com/matgat/prctime.git
 > cd prctime/msvc
-> msbuild prctime.vcxproj -t:prctime -p:Configuration=Release
+> msbuild prctime.vcxproj -t:Rebuild -p:Configuration=Release -p:Platform=x64
 > cl /std:c++latest /utf-8 /W4 /O2 /D_CRT_SECURE_NO_WARNINGS "source/prctime.cpp" /link /out:prctime.exe
 ```
