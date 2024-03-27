@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, psutil
+import os, sys, psutil, shutil
 import subprocess
 import ctypes
 import time
@@ -76,12 +76,17 @@ def main():
 
     print(f"\n{BLUE}Building {CYAN}{projectname}{END}")
     if (build_ret:=launch(build_cmd))!=0:
-        closing_bad(f"Build error")
+        closing_bad("Build error")
         return build_ret
 
     if not os.path.isfile(exe):
         closing_bad(f"{exe} not generated!")
         return 1
+
+    if f"{configuration}|{platform}"=="Release|x64" and os.name=='nt' and os.path.isdir(dst_path:=os.path.expandvars('%UserProfile%/Bin')):
+        print(f"{GRAY}Copying {END}{exe}{GRAY} to {END}{dst_path}")
+        try: shutil.copy(exe, dst_path)
+        except Exception as e: print(f"{RED}{e}{END}")
 
     closing_ok(f"Build of {projectname} ok")
     return 0
